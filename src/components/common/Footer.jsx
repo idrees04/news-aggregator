@@ -1,11 +1,11 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 
-function Footer() {
+const Footer = () => {
   return (
     <footer>
-      <Typography variant="body2" color="textSecondary" align="center">
-        © {new Date().getFullYear()} News Aggregator
+      <Typography variant="body2" color="textSecondary" align="center" pt={3}>
+        &copy; {new Date().getFullYear()} News Aggregator
       </Typography>
     </footer>
   );
