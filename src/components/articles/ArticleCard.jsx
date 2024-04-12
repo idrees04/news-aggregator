@@ -41,6 +41,9 @@ function ArticleCard({ article, onImageError }) {
         <Typography variant="h6" component="h2" style={{ marginBottom: '8px', fontSize: '18px', color: '#333', fontWeight: 'bold' }}>
           {article.title}
         </Typography>
+        <Typography variant="subtitle1" color="textSecondary" gutterBottom style={{ marginBottom: '8px', color: '#333' }}>
+          By {article.author}
+        </Typography>
         <Typography variant="body2" color="textSecondary" gutterBottom style={{ marginBottom: '8px', color: '#333' }}>
           {new Date(article.publishedAt).toLocaleString()}
         </Typography>

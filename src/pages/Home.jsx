@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import ArticleList from '../components/articles/ArticleList';
@@ -9,13 +9,15 @@ const searchCriteria = {
 };
 
 function Home() {
+
+
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
       <Typography variant="h4" align="center" gutterBottom>
         Latest News
       </Typography>
-      <ArticleList searchCriteria={searchCriteria} isSearchClicked={true} />
+      <ArticleList searchCriteria={searchCriteria} type="home" />
       </Box>
     </Container>
   );

@@ -7,7 +7,7 @@ import ArticleCard from './ArticleCard';
 import { fetchArticles } from '../../services/api';
 import ErrorBoundary from '../../utils/ErrorBoundary';
 
-function ArticleList({ searchCriteria, isSearchClicked, setIsSearchClicked }) {
+function ArticleList({ searchCriteria, isSearchClicked, setIsSearchClicked, type }) {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,25 +25,32 @@ function ArticleList({ searchCriteria, isSearchClicked, setIsSearchClicked }) {
       }
     };
 
-    if (isSearchClicked) {
+    if(type==='home') {
+      fetchArticlesData();
+    }
+    else if (isSearchClicked) {
       fetchArticlesData();
       setIsSearchClicked(false);
     }
   }, [searchCriteria, isSearchClicked]);
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth='md'>
       {error ? (
-        <ErrorBoundary Error={error} /> 
+        <ErrorBoundary Error={error} />
       ) : loading ? (
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
           <CircularProgress />
-          <Typography variant="body1" align="center" style={{ marginTop: '20px' }}>
+          <Typography
+            variant='body1'
+            align='center'
+            style={{ marginTop: '20px' }}
+          >
             Loading...
           </Typography>
         </div>
       ) : articles.length === 0 ? (
-        <Typography variant="body1" align="center">
+        <Typography variant='body1' align='center'>
           No articles found.
         </Typography>
       ) : (
