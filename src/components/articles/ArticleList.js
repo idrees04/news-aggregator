@@ -16,7 +16,31 @@ function ArticleList({ searchCriteria, isSearchClicked, setIsSearchClicked, type
     const fetchArticlesData = async () => {
       try {
         setLoading(true);
-        const fetchedArticles = await fetchArticles(searchCriteria);
+        let fetchedArticles;
+
+        // Retrieve preferences from localStorage
+        const preferences = JSON.parse(localStorage.getItem('preferences'));
+        console.log("preferences", preferences);
+        let criteria = searchCriteria;
+
+        // Check if preferences exist and construct searchCriteria accordingly
+        if (preferences && preferences.sources && preferences.authors) {
+          const { sources, authors } = preferences;
+          console.log("sources", sources, "authors", authors, "searchCriteria", searchCriteria);
+          criteria = { ...criteria, sources };
+          fetchedArticles = await fetchArticles(criteria);
+          // fetchedArticles = [
+          //   ...new Set(fetchedArticles.map((article) => article.author)),
+          // ];
+        } else {
+          // If preferences are not set, fetch articles without filtering
+          console.log("preferences", searchCriteria);
+
+          fetchedArticles = await fetchArticles(searchCriteria);
+        }
+
+        localStorage.setItem('articles', JSON.stringify(fetchedArticles));
+
         setArticles(fetchedArticles);
         setLoading(false);
       } catch (error) {
@@ -25,10 +49,9 @@ function ArticleList({ searchCriteria, isSearchClicked, setIsSearchClicked, type
       }
     };
 
-    if(type==='home') {
+    if (type === 'home') {
       fetchArticlesData();
-    }
-    else if (isSearchClicked) {
+    } else if (isSearchClicked) {
       fetchArticlesData();
       setIsSearchClicked(false);
     }
