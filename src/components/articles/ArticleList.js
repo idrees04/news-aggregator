@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { fetchArticles } from '../../services/api.js'; // Assuming you have a function to fetch articles from an API
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import ArticleCard from './ArticleCard';
+import { fetchArticles } from '../../services/api';
 
-function ArticleList() {
+function ArticleList({ searchCriteria }) {
   const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch articles from the API when the component mounts
-    fetchArticles()
-      .then((data) => setArticles(data))
-      .catch((error) => console.error('Error fetching articles:', error));
-  }, []);
+    const fetchArticlesData = async () => {
+      try {
+        const fetchedArticles = await fetchArticles(searchCriteria);
+        setArticles(fetchedArticles);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchArticlesData();
+  }, [searchCriteria]);
 
   return (
-    <div>
-      {articles.map((article) => (
-        <div key={article.id}>
-          <h3>{article.title}</h3>
-          <p>{article.description}</p>
+    <Container maxWidth="md">
+      {loading ? (
+        <Typography variant="body1" align="center">
+          Loading...
+        </Typography>
+      ) : (
+        <div>
+          {articles.map((article, index) => (
+            <ArticleCard key={index} article={article} />
+          ))}
         </div>
-      ))}
-    </div>
+      )}
+    </Container>
   );
 }
 
