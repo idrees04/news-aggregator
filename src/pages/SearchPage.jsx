@@ -10,12 +10,13 @@ function SearchPage() {
     q: '',
     from: '',
     to: '',
-    domains: '',
+    sources: '',
   });
   const [isSearchClicked, setIsSearchClicked] = useState(false);
 
   const handleSearch = (values) => {
-    if (!values.keyword && !values.domains) {
+    console.log("values", values);
+    if (!values.keyword && !values.sources) {
       return;
     }
 
@@ -23,7 +24,7 @@ function SearchPage() {
       q: values.keyword,
       from: values.from,
       to: values.to,
-      domains: values.domains,
+      sources: values.sources,
     });
     setIsSearchClicked(true);
   };

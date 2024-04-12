@@ -8,13 +8,10 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const SearchFormSchema = Yup.object().shape({
-  keyword: Yup.string().required('Required'),
+  keyword: Yup.string().matches(/^[a-zA-Z0-9\s\-]+$/, 'Special characters are not allowed').required('Required'),
   from: Yup.date(),
   to: Yup.date().min(Yup.ref('from'), 'To date must be after from date'),
-  domains: Yup.string().matches(
-    /^(https?:\/\/)?([\w-]+\.)*[\w-]+(\.[a-z]{2,})?(:\d{1,5})?(\/.*)?$/,
-    'Invalid URL format'
-  ).max(255, 'Only one URL is allowed'),
+  sources: Yup.string().matches(/^[a-zA-Z0-9\s\-]+$/, 'Special characters are not allowed'),
 });
 
 function SearchForm({ onSearch }) {
@@ -35,7 +32,7 @@ function SearchForm({ onSearch }) {
         keyword: '',
         from: '',
         to: '',
-        domains: '',
+        sources: '',
       }}
       validationSchema={SearchFormSchema}
       onSubmit={handleSubmit}
@@ -83,12 +80,12 @@ function SearchForm({ onSearch }) {
             <Grid item xs={12}>
               <Field
                 as={TextField}
-                name="domains"
-                label="Source"
+                name="sources"
+                label="Sources"
                 variant="outlined"
                 fullWidth
-                error={touched.domains && !!errors.domains}
-                helperText={touched.domains && errors.domains}
+                error={touched.sources && !!errors.sources}
+                helperText={touched.sources && errors.sources}
               />
             </Grid>
             <Grid item xs={12}>

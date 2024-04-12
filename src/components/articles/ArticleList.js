@@ -7,7 +7,7 @@ import ArticleCard from './ArticleCard';
 import { fetchArticles } from '../../services/api';
 import ErrorBoundary from '../../utils/ErrorBoundary';
 
-function ArticleList({ searchCriteria, isSearchClicked }) {
+function ArticleList({ searchCriteria, isSearchClicked, setIsSearchClicked }) {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,6 +27,7 @@ function ArticleList({ searchCriteria, isSearchClicked }) {
 
     if (isSearchClicked) {
       fetchArticlesData();
+      setIsSearchClicked(false);
     }
   }, [searchCriteria, isSearchClicked]);
 
