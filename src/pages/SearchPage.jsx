@@ -29,7 +29,7 @@ function SearchPage() {
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h2" align="center" gutterBottom>
+      <Typography variant="h4" align="center" gutterBottom>
         Search Articles
       </Typography>
       <SearchForm onSearch={handleSearch} />

@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { Box } from '@mui/material';
 
 const ProfileSettingsSchema = Yup.object().shape({
   sources: Yup.string().required('Preferred sources are required'),
@@ -70,9 +71,15 @@ function ProfileSettings() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary">
-                Save Preferences
-              </Button>
+              <Box display="flex" justifyContent="flex-end" mb={3} >
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
+                   Save Preferences
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </Form>

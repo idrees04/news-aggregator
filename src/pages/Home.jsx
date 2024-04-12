@@ -10,7 +10,7 @@ const searchCriteria = {
 function Home() {
   return (
     <Container maxWidth="md">
-      <Typography variant="h2" align="center" gutterBottom>
+      <Typography variant="h4" align="center" gutterBottom>
         Latest News
       </Typography>
       <ArticleList searchCriteria={searchCriteria} isSearchClicked={true} />
