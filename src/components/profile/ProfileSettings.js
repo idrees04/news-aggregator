@@ -76,6 +76,7 @@ function ProfileSettings() {
   const clearPreferences = () => {
     localStorage.removeItem('preferences');
     formik.resetForm();
+    notyf.success('Preferences removed!');
   };
   
 
