@@ -7,8 +7,8 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install build dependencies
-RUN apk add --no-cache --virtual .build-deps build-deps && \
-    npm install --only=production
+# RUN apk add --no-cache --virtual .build-deps build-deps && \
+#     npm install --only=production
 
 # Install dependencies
 RUN npm install
