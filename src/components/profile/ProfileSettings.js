@@ -20,19 +20,26 @@ function ProfileSettings() {
 
   useEffect(() => {
     const articles_ = JSON.parse(localStorage.getItem('articles')) || [];
-    setArticles(articles_);
     const filteredArticles = articles_.filter(
       (article) => article.source.id !== null
     );
-
+    setArticles(filteredArticles);
     const uniqueSources = [
       ...new Set(filteredArticles.map((article) => article.source.name)),
     ];
     const uniqueAuthors = [
-      ...new Set(articles_.map((article) => article.author)),
+      ...new Set(filteredArticles.map((article) => article.author)),
     ];
     setSourcesOptions(uniqueSources);
     setAuthorsOptions(uniqueAuthors);
+
+    const preferences = JSON.parse(localStorage.getItem('preferences')) || {};
+    const { sources, authors } = preferences;
+
+    if (sources && authors) {
+      formik.setFieldValue('sources', sources.name); // Set only the name of the source
+      formik.setFieldValue('authors', authors);
+    }
   }, []);
 
   const formik = useFormik({
@@ -42,13 +49,16 @@ function ProfileSettings() {
     },
     validationSchema: ProfileSettingsSchema,
     onSubmit: (values) => {
-      let { sources, authors } = values;
-      console.log('articles', articles);
-      sources = articles.find((article) => article.source.name === sources);
-      const preferences = {
-        sources,
-        authors,
-      };
+      const { sources, authors } = values;
+      
+      console.log('sources', sources, 'authors', authors);
+     const sources_ = articles.find((article) => article.source.name === sources);
+     const selectedSource = articles.find(article => article.source.name === sources);
+     const { id, name } = selectedSource.source;
+     const preferences = {
+       sources: { id, name },
+       authors,
+     };
       localStorage.setItem('preferences', JSON.stringify(preferences));
       notyf.success('Preferences saved successfully!');
     },
@@ -60,7 +70,7 @@ function ProfileSettings() {
       .filter((article) => article.source.name === selectedSource)
       .map((article) => article.author);
     setAuthorsOptions([...new Set(filteredAuthors)]);
-    formik.setFieldValue('sources', selectedSource); // Update Formik field value
+    formik.setFieldValue('sources', selectedSource);
   };
 
   return (

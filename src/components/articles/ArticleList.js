@@ -7,7 +7,12 @@ import ArticleCard from './ArticleCard';
 import { fetchArticles } from '../../services/api';
 import ErrorBoundary from '../../utils/ErrorBoundary';
 
-function ArticleList({ searchCriteria, isSearchClicked, setIsSearchClicked, type }) {
+function ArticleList({
+  searchCriteria,
+  isSearchClicked,
+  setIsSearchClicked,
+  type,
+}) {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,27 +25,26 @@ function ArticleList({ searchCriteria, isSearchClicked, setIsSearchClicked, type
 
         // Retrieve preferences from localStorage
         const preferences = JSON.parse(localStorage.getItem('preferences'));
-        console.log("preferences", preferences);
         let criteria = searchCriteria;
 
         // Check if preferences exist and construct searchCriteria accordingly
-        if (preferences && preferences.sources && preferences.authors) {
+        if (preferences && preferences.sources.id && preferences.authors) {
           const { sources, authors } = preferences;
-          console.log("sources", sources, "authors", authors, "searchCriteria", searchCriteria);
-          criteria = { ...criteria, sources };
+          const { id } = sources;
+
+          criteria = { ...criteria, sources: id };
+
           fetchedArticles = await fetchArticles(criteria);
-          // fetchedArticles = [
-          //   ...new Set(fetchedArticles.map((article) => article.author)),
-          // ];
+          fetchedArticles = fetchedArticles.filter(article => authors.includes(article.author));
+
         } else {
           // If preferences are not set, fetch articles without filtering
-          console.log("preferences", searchCriteria);
+          console.log('preferences', searchCriteria);
 
           fetchedArticles = await fetchArticles(searchCriteria);
         }
 
         localStorage.setItem('articles', JSON.stringify(fetchedArticles));
-
         setArticles(fetchedArticles);
         setLoading(false);
       } catch (error) {
