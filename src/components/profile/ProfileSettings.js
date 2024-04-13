@@ -73,6 +73,12 @@ function ProfileSettings() {
     formik.setFieldValue('sources', selectedSource);
   };
 
+  const clearPreferences = () => {
+    localStorage.removeItem('preferences');
+    formik.resetForm();
+  };
+  
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid container spacing={2}>
@@ -120,9 +126,12 @@ function ProfileSettings() {
           </TextField>
         </Grid>
         <Grid item xs={12}>
-          <Box display='flex' justifyContent='flex-end' mb={3}>
+          <Box display='flex' justifyContent='space-between' mb={3}>
             <Button type='submit' variant='contained' color='primary'>
               Save Preferences
+            </Button>
+            <Button onClick={clearPreferences} variant='contained' color='primary'>
+              Clear Preferences
             </Button>
           </Box>
         </Grid>
