@@ -29,12 +29,15 @@ This guide will walk you through the steps to run the news-aggregator applicatio
 4. Run the Docker container:
 
     ```bash
-    docker run -p 80:80 news-aggregator
+    docker run -p 8080:80 news-aggregator
     ```
 
-   This command will start the Docker container and map port 80 of the container to port 80 of your host machine.
+   This command will start the Docker container and map port 80 of the container to port 8080 of your host machine. You can now access the application by navigating to `http://localhost:8080` in your web browser.
 
-5. Open your web browser and navigate to `http://localhost` to access the news-aggregator application.
+   **Note**: If port 8080 is already in use on your system, you can specify a different port number in the command. For example:
+
+   ```bash
+   docker run -p 8888:80 news-aggregator
 
 ## Notes
 
