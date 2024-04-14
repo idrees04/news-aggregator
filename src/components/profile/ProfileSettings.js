@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useFormik } from 'formik'; // Importing useFormik
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -13,11 +13,12 @@ const ProfileSettingsSchema = Yup.object().shape({
   authors: Yup.string().required('Authors are required'),
 });
 
-function ProfileSettings() {
-  const [sourcesOptions, setSourcesOptions] = useState([]);
-  const [authorsOptions, setAuthorsOptions] = useState([]);
-  const [articles, setArticles] = useState([]);
-
+function useProfileSettingsEffect(
+  formik,
+  setSourcesOptions,
+  setAuthorsOptions,
+  setArticles
+) {
   useEffect(() => {
     const articles_ = JSON.parse(localStorage.getItem('articles')) || [];
     const filteredArticles = articles_.filter(
@@ -37,10 +38,16 @@ function ProfileSettings() {
     const { sources, authors } = preferences;
 
     if (sources && authors) {
-      formik.setFieldValue('sources', sources.name); // Set only the name of the source
+      formik.setFieldValue('sources', sources.name);
       formik.setFieldValue('authors', authors);
     }
   }, []);
+}
+
+function ProfileSettings() {
+  const [sourcesOptions, setSourcesOptions] = useState([]);
+  const [authorsOptions, setAuthorsOptions] = useState([]);
+  const [articles, setArticles] = useState([]);
 
   const formik = useFormik({
     initialValues: {
@@ -50,19 +57,25 @@ function ProfileSettings() {
     validationSchema: ProfileSettingsSchema,
     onSubmit: (values) => {
       const { sources, authors } = values;
-      
-      console.log('sources', sources, 'authors', authors);
-     const sources_ = articles.find((article) => article.source.name === sources);
-     const selectedSource = articles.find(article => article.source.name === sources);
-     const { id, name } = selectedSource.source;
-     const preferences = {
-       sources: { id, name },
-       authors,
-     };
+      const selectedSource = articles.find(
+        (article) => article.source.name === sources
+      );
+      const { id, name } = selectedSource.source;
+      const preferences = {
+        sources: { id, name },
+        authors,
+      };
       localStorage.setItem('preferences', JSON.stringify(preferences));
       notyf.success('Preferences saved successfully!');
     },
   });
+
+  useProfileSettingsEffect(
+    formik,
+    setSourcesOptions,
+    setAuthorsOptions,
+    setArticles
+  );
 
   const handleSourcesChange = (event) => {
     const selectedSource = event.target.value;
@@ -78,7 +91,6 @@ function ProfileSettings() {
     formik.resetForm();
     notyf.success('Preferences removed!');
   };
-  
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -128,11 +140,15 @@ function ProfileSettings() {
         </Grid>
         <Grid item xs={12}>
           <Box display='flex' justifyContent='space-between' mb={3}>
+            <Button
+              onClick={clearPreferences}
+              variant='contained'
+              color='primary'
+            >
+              Clear Preferences
+            </Button>
             <Button type='submit' variant='contained' color='primary'>
               Save Preferences
-            </Button>
-            <Button onClick={clearPreferences} variant='contained' color='primary'>
-              Clear Preferences
             </Button>
           </Box>
         </Grid>
