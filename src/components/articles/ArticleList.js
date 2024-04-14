@@ -62,7 +62,7 @@ function ArticleList({
   }, [searchCriteria, isSearchClicked]);
 
   return (
-    <Container maxWidth='md'>
+    <Container maxWidth='lg'>
       {error ? (
         <ErrorBoundary Error={error} />
       ) : loading ? (

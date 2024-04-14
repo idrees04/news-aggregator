@@ -9,10 +9,10 @@ const cardStyles = {
   margin: 'auto',
   backgroundColor: '#f5f5f5',
   boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-  transition: 'opacity 0.2s ease-in-out',
-  cursor: 'pointer',
+  transition: 'transform 0.2s, box-shadow 0.2s',
   '&:hover': {
-    opacity: 0.9,
+    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+    transform: 'translateY(-4px)',
   },
 };
 
@@ -20,8 +20,16 @@ const handleImageError = (event) => {
   event.target.style.display = 'none';
 };
 
-function ArticleCard({ article, onImageError }) {
-  const imageUrl = article.urlToImage || 'path/to/placeholder.jpg'; // Placeholder with default value
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleString();
+};
+
+const ArticleCard = ({ article, onImageError }) => {
+  const imageUrl = article.urlToImage || 'path/to/placeholder.jpg';
+
+  const openArticle = () => {
+    window.open(article.url, '_blank');
+  };
 
   return (
     <Card variant="outlined" style={cardStyles}>
@@ -31,7 +39,7 @@ function ArticleCard({ article, onImageError }) {
         onError={onImageError || handleImageError}
         style={{
           width: '100%',
-          height: '200px',
+          maxHeight: '300px',
           objectFit: 'cover',
           borderTopLeftRadius: '4px',
           borderTopRightRadius: '4px',
@@ -45,20 +53,20 @@ function ArticleCard({ article, onImageError }) {
           By {article.author}
         </Typography>
         <Typography variant="body2" color="textSecondary" gutterBottom style={{ marginBottom: '8px', color: '#333' }}>
-          {new Date(article.publishedAt).toLocaleString()}
+          {formatDate(article.publishedAt)}
         </Typography>
         <Typography variant="body1" component="p" style={{ marginBottom: '8px', fontSize: '16px', color: '#333' }}>
           {article.description}
         </Typography>
         <Typography variant="caption" color="textSecondary">
           {article.source.name}
-          <a href={article.url} style={{ float: 'right', color: '#007bff' }}>
+          <span style={{ float: 'right', color: '#007bff', cursor: 'pointer' }} onClick={openArticle}>
             Read More
-          </a>
+          </span>
         </Typography>
       </CardContent>
     </Card>
   );
-}
+};
 
 export default ArticleCard;
