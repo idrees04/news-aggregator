@@ -41,6 +41,7 @@ function SearchPage() {
             searchCriteria={searchCriteria}
             isSearchClicked={isSearchClicked}
             setIsSearchClicked={setIsSearchClicked}
+            type="search"
           />
         )}
       </Box>

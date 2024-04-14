@@ -55,7 +55,7 @@ function ArticleList({
 
     if (type === 'home') {
       fetchArticlesData();
-    } else if (isSearchClicked) {
+    } else if (type === 'search') {
       fetchArticlesData();
       setIsSearchClicked(false);
     }
