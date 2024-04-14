@@ -6,7 +6,7 @@ import ProfileSettings from '../components/profile/ProfileSettings';
 
 function ProfilePage() {
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" align="center" gutterBottom>
           Profile Settings

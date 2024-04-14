@@ -30,7 +30,7 @@ function SearchPage() {
   };
 
   return (
-    <Container maxWidth='md'>
+    <Container maxWidth='lg'>
       <Box sx={{ my: 4 }}>
         <Typography variant='h4' align='center' gutterBottom>
           Search Articles
