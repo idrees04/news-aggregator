@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import ArticleList from '../components/articles/ArticleList';

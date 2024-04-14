@@ -36,7 +36,7 @@ function SearchPage() {
           Search Articles
         </Typography>
         <SearchForm onSearch={handleSearch} />
-        {searchCriteria.q != '' && (
+        {searchCriteria.q !== '' && (
           <ArticleList
             searchCriteria={searchCriteria}
             isSearchClicked={isSearchClicked}

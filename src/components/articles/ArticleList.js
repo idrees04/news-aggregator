@@ -59,7 +59,7 @@ function ArticleList({
       fetchArticlesData();
       setIsSearchClicked(false);
     }
-  }, [searchCriteria, isSearchClicked]);
+  }, [searchCriteria, isSearchClicked, setIsSearchClicked, type]);
 
   return (
     <Container maxWidth='lg'>
