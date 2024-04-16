@@ -21,7 +21,17 @@ function useProfileSettingsEffect(
 ) {
   useEffect(() => {
     const articles_ = JSON.parse(localStorage.getItem('articles')) || [];
-    const filteredArticles = articles_.filter(
+    const existingArticles = JSON.parse(localStorage.getItem('articles_data'));
+    let articlesdata = [];
+    if (!existingArticles) {
+      localStorage.setItem('articles_data', JSON.stringify(articles_));
+      console.log('Articles stored successfully.');
+      articlesdata = articles_;
+    } else {
+      articlesdata = existingArticles;
+    }
+
+    const filteredArticles = articlesdata.filter(
       (article) => article.source.id !== null
     );
     setArticles(filteredArticles);

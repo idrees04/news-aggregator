@@ -39,7 +39,6 @@ function ArticleList({
 
         } else {
           // If preferences are not set, fetch articles without filtering
-          console.log('preferences', searchCriteria);
 
           fetchedArticles = await fetchArticles(searchCriteria);
         }

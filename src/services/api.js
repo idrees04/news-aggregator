@@ -12,7 +12,6 @@ const instance = axios.create({
 
 export const fetchArticles = async (query) => {
   const { q, from, to, sources,  } = query;
-  console.log('query', query);
   let url = '/everything';
   let params = {
     apiKey: API_KEY,
@@ -23,7 +22,6 @@ export const fetchArticles = async (query) => {
   };
 
   try {
-    console.log('params', params);
     const response = await instance.get(url, { params });
     return response.data.articles;
   } catch (error) {
