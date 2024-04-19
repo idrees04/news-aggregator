@@ -6,13 +6,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ArticleCard from './ArticleCard';
 import { fetchArticles } from '../../services/api';
 import ErrorBoundary from '../../utils/ErrorBoundary';
+import { connect } from 'react-redux';
+import { fetchArticles } from '../../actions/articleActions';
 
-function ArticleList({
-  searchCriteria,
-  isSearchClicked,
-  setIsSearchClicked,
-  type,
-}) {
+const ArticleList = ({ articles, fetchArticles }) => {
+
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -92,4 +90,8 @@ function ArticleList({
   );
 }
 
-export default ArticleList;
+const mapStateToProps = (state) => ({
+  articles: state.article.articles,
+});
+
+export default connect(mapStateToProps, { fetchArticles })(ArticleList);

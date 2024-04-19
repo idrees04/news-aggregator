@@ -15,6 +15,7 @@ export const fetchArticles = async (query) => {
   let url = '/everything';
   let params = {
     apiKey: API_KEY,
+    date:new Date(),
     q: q,
     from: from,
     to: to,
